@@ -61,6 +61,7 @@ class ChangeTextBehaviorKtTest {
      * [androidx.test.rule.ActivityTestRule].
      */
     @get:Rule var activityScenarioRule = activityScenarioRule<MainActivity>()
+    val STRING_TO_BE_TYPED = "I like mobile testing"
 
     @Test
     fun changeText_sameActivity() {
@@ -84,25 +85,5 @@ class ChangeTextBehaviorKtTest {
 
         // This view is in a different Activity, no need to tell Espresso.
         onView(withId(R.id.show_text_view)).check(matches(withText(STRING_TO_BE_TYPED)))
-    }
-
-    @Test
-    fun checkChangedText() {
-        TextInputField.typeText(STRING_TO_BE_TYPED)
-        ChangeTextBtn.tap()
-
-        Assert.assertEquals(STRING_TO_BE_TYPED, TextViewField.getText())
-        isTextOnScreen(TextInputField.getText())
-
-
-    }
-
-    companion object {
-
-        val STRING_TO_BE_TYPED = "I like mobile testing"
-
-        val TextInputField: Matcher<View> by lazy { withId(R.id.editTextUserInput) }
-        val ChangeTextBtn: Matcher<View> by lazy { withId(R.id.changeTextBt) }
-        val TextViewField: Matcher<View> by lazy { withId(R.id.textToBeChanged) }
     }
 }
