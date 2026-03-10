@@ -61,29 +61,65 @@ class ChangeTextBehaviorKtTest {
      * [androidx.test.rule.ActivityTestRule].
      */
     @get:Rule var activityScenarioRule = activityScenarioRule<MainActivity>()
-    val STRING_TO_BE_TYPED = "I like mobile testing"
+
+    //es ar wavshale barem iyos ratomac ara
+//    val STRING_TO_BE_TYPED = "I like mobile testing"
+//
+//    @Test
+//    fun changeText_sameActivity() {
+//
+//        // Type text and then press the button.
+//        onView(withId(R.id.editTextUserInput))
+//                .perform(typeText(STRING_TO_BE_TYPED), closeSoftKeyboard())
+//        onView(withId(R.id.changeTextBt)).perform(click())
+//
+//
+//        // Check that the text was changed.
+//        onView(withId(R.id.textToBeChanged)).check(matches(withText(STRING_TO_BE_TYPED)))
+//    }
+//
+//    @Test
+//    fun changeText_newActivity() {
+//        // Type text and then press the button.
+//        onView(withId(R.id.editTextUserInput)).perform(typeText(STRING_TO_BE_TYPED),
+//                closeSoftKeyboard())
+//        onView(withId(R.id.activityChangeTextBtn)).perform(click())
+//
+//        // This view is in a different Activity, no need to tell Espresso.
+//        onView(withId(R.id.show_text_view)).check(matches(withText(STRING_TO_BE_TYPED)))
+//    }
+
+    val favFood = "xinkali"
+    val favMovie = "velociPastor"
+    val difMovie = "snatch"
 
     @Test
-    fun changeText_sameActivity() {
+    fun validateTitleText(){
+        inputField.typeText(favFood)
+        changeTextBtn.tap(5)
+        Assert.assertEquals(favFood, titleText.getText())
 
-        // Type text and then press the button.
-        onView(withId(R.id.editTextUserInput))
-                .perform(typeText(STRING_TO_BE_TYPED), closeSoftKeyboard())
-        onView(withId(R.id.changeTextBt)).perform(click())
-
-
-        // Check that the text was changed.
-        onView(withId(R.id.textToBeChanged)).check(matches(withText(STRING_TO_BE_TYPED)))
     }
 
     @Test
-    fun changeText_newActivity() {
-        // Type text and then press the button.
-        onView(withId(R.id.editTextUserInput)).perform(typeText(STRING_TO_BE_TYPED),
-                closeSoftKeyboard())
-        onView(withId(R.id.activityChangeTextBtn)).perform(click())
+    fun validateOpenActivityText(){
+        inputField.typeText(favMovie)
+        changeTextBtn.tap(5)
+        Assert.assertEquals(favMovie, titleText.getText())
 
-        // This view is in a different Activity, no need to tell Espresso.
-        onView(withId(R.id.show_text_view)).check(matches(withText(STRING_TO_BE_TYPED)))
+        onView(inputField).perform(clearText())
+        inputField.typeText(difMovie)
+        activityBtn.tap(5)
+        Assert.assertEquals(difMovie, activityPageText.getText())
+
+    }
+
+    companion object{
+        val inputField: Matcher<View>by lazy { withId(R.id.editTextUserInput) }
+        val changeTextBtn: Matcher<View>by lazy { withId(R.id.changeTextBt) }
+        val titleText: Matcher<View>by lazy { withId(R.id.textToBeChanged) }
+
+        val activityBtn: Matcher<View>by lazy { withId(R.id.activityChangeTextBtn) }
+        val activityPageText: Matcher<View>by lazy { withId(R.id.show_text_view) }
     }
 }
